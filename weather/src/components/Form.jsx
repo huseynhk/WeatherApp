@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import NavBar from "./NavBar";
+import Buttons from "./Buttons";
 import { useDispatch } from "react-redux";
 import { getPrognos } from "../features/redux/weatherSlice";
 
-function Form() {
+const Form = () => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
   const handleChange = (e) => {
@@ -22,19 +22,18 @@ function Form() {
   return (
     <form
       onSubmit={(e) => handleSubmit(e)}
-      className="flex justify-center items-center w-8/12"
+      className="flex justify-center items-center w-8/12 mt-12"
     >
-      <NavBar/>
+      <Buttons />
       <input
-        className="w-full capitalize bg-[#f3f4f6] outline-none border-none text-[#474747] h-10 rounded-xl p-2 indent-8 "
+        className="w-full capitalize bg-[#f3f4f6] outline-none border-none text-[#474747] h-10 rounded-sm  indent-2"
         type="text"
         placeholder="Search City"
         value={query}
         onChange={(e) => handleChange(e)}
       />
- 
     </form>
   );
-}
+};
 
 export default Form;

@@ -1,14 +1,16 @@
 import React from "react";
 import Form from "./Form";
-import Result from "./Result";
+import Cover from "./Cover";
+import Head from "./Head";
 
-function Sidebar() {
+const SideBar = () => {
   return (
-    <div className="flex flex-col h-full items-center py-12">
+    <div className="flex flex-col  items-center ">
+      <Cover />
+      <Head />
       <Form />
-      <Result />
     </div>
   );
-}
+};
 
-export default Sidebar;
+export default SideBar;

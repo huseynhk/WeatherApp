@@ -4,7 +4,7 @@ import { LuClock10 } from "react-icons/lu";
 import { FaThermometer } from "react-icons/fa";
 import { IoCalendarClearOutline } from "react-icons/io5";
 
-function Head() {
+const Head = () => {
   const data = useSelector((state) => state.weather.data);
   const isKelvin = useSelector((state) => state.changeDegre.isKelvin);
   const [localTime, setLocalTime] = useState("");
@@ -28,63 +28,57 @@ function Head() {
       ? ""
       : data.length !== 0 && Math.trunc(data.main.feels_like - 273);
 
-  const name =
-    data.message === "city not found" ? "" : data.length !== 0 && data.name;
-
   var today = new Date();
-
   var dd = String(today.getDate()).padStart(2, "0");
-
   var mm = String(today.getMonth() + 1).padStart(2, "0");
-
-  var yyyy = today.getFullYear();
-
-  today = mm + " . " + dd + " . " + yyyy;
-
-  const desc =
-    data.message === "city not found"
-      ? ""
-      : data.length !== 0 && data.weather[0].description;
+  var yy = today.getFullYear() % 100;
+  today = dd + " . " + mm + " . " + yy;
 
   return (
     <>
       {data.message === "city not found" ? (
         ""
       ) : (
-        <div className="h-auto flex  justify-between items-center">
-          <div className=" flex flex-col justify-between items-start me-8">
-            <span className=" text-3xl">{name}</span>
-
-            <span className="flex  justify-center items-center  capitalize my-2 ">
-              <FaThermometer />
-              <span className="ms-2">{desc}</span>
-            </span>
-
-            <span className="capitalize mt-2">
-              <div>
-                <span className="text-lg flex  justify-center items-center">
-                  <LuClock10 /> <span className="ms-2">{localTime}</span>
-                </span>
-                <hr className="my-1 " />
-                <p className="text-blue-200  text-md ">Real Time</p>
-              </div>
-            </span>
+        <div className="h-auto flex flex-col  justify-between items-center">
+          <div className="mb-3">
+            <span className=" text-5xl text-blue-100">{data.length !== 0 && data.name}</span>
           </div>
 
-          <div className="  flex flex-col justify-between items-center">
-            <div className="flex justify-between items-center  ">
-            <span className="mb-2 me-2" >  <IoCalendarClearOutline /></span>
-              <span className="text-lg mb-2 ">{today}</span>
+          <div className="flex   justify-evenly items-center">
+            <div className="  flex flex-col justify-between items-center mr-48">
+              <span className="flex  justify-center items-center  capitalize mt-4 ">
+                <FaThermometer />
+                <span className="text-xl ml-2">
+                  {data.length !== 0 && data.weather[0].description}
+                </span>
+              </span>
+              <p className="text-7xl leading-tight font-extralight mt-5 ">
+                {isKelvin
+                  ? data.length !== 0 && Math.trunc(data.main.feels_like)
+                  : degree}
+                °
+                <sup className=" leading-tight font-extralight ">
+                  {isKelvin ? "K" : "C"}
+                </sup>
+              </p>
             </div>
-            <p className="text-[85px] leading-tight font-extralight ">
-              {isKelvin
-                ? data.length !== 0 && Math.trunc(data.main.feels_like)
-                : degree}
-              °
-              <sup className=" leading-tight font-extralight ml-2">
-                {isKelvin ? "K" : "C"}
-              </sup>
-            </p>
+
+            <div className=" flex flex-col justify-between items-center ">
+              <div className="flex justify-between items-center mb-4">
+                <span className="text-xl " ><IoCalendarClearOutline /></span>
+                <span className="text-xl  ml-2">{today}</span>
+              </div>
+
+              <span className="capitalize">
+                <div>
+                  <span className="text-2xl flex  justify-center items-center mt-2">
+                    <LuClock10 /> <span className="ms-2">{localTime}</span>
+                  </span>
+                  <hr className="my-1 " />
+                  <p className="text-blue-300  text-2xl ">Real Time</p>
+                </div>
+              </span>
+            </div>
           </div>
         </div>
       )}
